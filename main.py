@@ -18,8 +18,6 @@ def send_telegram_file(file_path):
 
 #### root ####
 def send_telegram_message(message):
-    bot_token = "bot_token"
-    chat_id = "chat_id"
     
     url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
     payload = {"chat_id": chat_id, "text": message}
@@ -84,8 +82,11 @@ while True:
     minutes = current_time.minute
     # Check if the current time is between 8 am and 9 pm
     if 6 <= hours < 19:
-        if minutes == 1: 
-          send_telegram_message(get_dict_word())
+        if minutes == 30: 
+          dict_word = get_dict_word()
+          send_telegram_message(dict_word)
+          print(f"a word {dict_word} has been sent")
+          time.sleep(60)
     
     schedule.run_pending()
-    time.sleep(1)
+    time.sleep(30)
