@@ -1,3 +1,4 @@
 *.env
 questions_images/
 questions.pdf
+dict.csv

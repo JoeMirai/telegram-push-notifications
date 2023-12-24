@@ -1,7 +1,4 @@
-import os
-import requests 
-import schedule
-import time
+import os,requests,schedule,time,csv,random
 from dotenv import load_dotenv
 from datetime import datetime
 
@@ -45,9 +42,34 @@ def theory():
   get_next_image()
   get_next_image()
 
-def get_words():
-   
-   pass
+def get_dict_word():
+    # Open the CSV file
+    with open('dict.csv', 'r') as file:
+        # Read the CSV file into a dictionary
+        reader = csv.DictReader(file)
+        words_data = list(reader)
+
+        # Choose a random word and update its repetitiveness value
+        selected_word = random.choice(words_data)
+        selected_word['repetitiveness'] = str(int(selected_word['repetitiveness']) + 1)
+
+    # Write the updated data back to the CSV file
+    with open('dict.csv', 'w', newline='') as file:
+        # Write the header
+        fieldnames = ['word', 'repetitiveness']
+        writer = csv.DictWriter(file, fieldnames=fieldnames)
+        writer.writeheader()
+
+        # Write the updated data
+        writer.writerows(words_data)
+    
+    return selected_word['word'], int(selected_word['repetitiveness'])
+
+
+
+
+
+
 schedule.every().day.at("07:00").do(theory)
 
 
@@ -60,9 +82,10 @@ while True:
     # Extract hours and minutes
     hours = current_time.hour
     minutes = current_time.minute
-    print(type(minutes))
-    if minutes == 10:
-       print("true")
-
+    # Check if the current time is between 8 am and 9 pm
+    if 6 <= hours < 19:
+        if minutes == 1: 
+          send_telegram_message(get_dict_word())
+    
     schedule.run_pending()
     time.sleep(1)
