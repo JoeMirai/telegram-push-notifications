@@ -1,6 +1,6 @@
 # Set input and output paths
-pdf_path="/home/jack/Desktop/tg/questions.pdf"
-out_dir="/home/jack/Desktop/tg/questions_images"
+pdf_path="/config/Downloads/telegram-push-notifications/CIA_WorldFactBook-Political_world.pdf"
+out_dir="/config/Downloads/telegram-push-notifications/maps"
 
 # Create output directory if it doesn't exist
 mkdir -p "$out_dir"

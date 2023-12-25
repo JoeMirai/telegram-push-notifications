@@ -32,7 +32,7 @@ def get_next_image():
     f.truncate()
 
   file_name = f'page{page_num}.png' 
-  file_path = os.path.join('/config/Downloads/telepy/questions_images', file_name)
+  file_path = os.path.join('/config/Downloads/telegram-push-notifications/questions_images', file_name)
   send_telegram_file(file_path)
 
 def theory():
