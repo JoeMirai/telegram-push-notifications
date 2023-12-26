@@ -43,25 +43,25 @@ def theory():
 def get_dict_word():
     # Open the CSV file
     with open('dict.csv', 'r') as file:
-        # Read the CSV file into a dictionary
-        reader = csv.DictReader(file)
-        words_data = list(reader)
+        # Create a CSV reader object
+        csv_reader = csv.reader(file)
+        
+        # Skip the header if it exists
+        next(csv_reader, None)
+        
+        # Create a list to store words and weights
+        words_and_weights = []
+        
+        # Read each row and store the word and weight in the list
+        for row in csv_reader:
+            word, weight = row
+            words_and_weights.append((word, int(weight)))
+        
+        # Choose a random word based on weights
+        chosen_word = random.choices(words_and_weights, weights=[w[1] for w in words_and_weights])[0][0]
+        
+        return chosen_word
 
-        # Choose a random word and update its repetitiveness value
-        selected_word = random.choice(words_data)
-        selected_word['repetitiveness'] = str(int(selected_word['repetitiveness']) + 1)
-
-    # Write the updated data back to the CSV file
-    with open('dict.csv', 'w', newline='') as file:
-        # Write the header
-        fieldnames = ['word', 'repetitiveness']
-        writer = csv.DictWriter(file, fieldnames=fieldnames)
-        writer.writeheader()
-
-        # Write the updated data
-        writer.writerows(words_data)
-    
-    return selected_word['word'], int(selected_word['repetitiveness'])
 
 
 
@@ -82,7 +82,7 @@ while True:
     minutes = current_time.minute
     # Check if the current time is between 8 am and 9 pm
     if 6 <= hours < 19:
-        if minutes == 30: 
+        if minutes == 25 or minutes == 55: 
           dict_word = get_dict_word()
           send_telegram_message(dict_word)
           print(f"a word {dict_word} has been sent")
