@@ -82,7 +82,7 @@ while True:
     minutes = current_time.minute
     # Check if the current time is between 8 am and 9 pm
     if 6 <= hours < 19:
-        if minutes == 25 or minutes == 55: 
+        if minutes == 15 or minutes == 45: 
           dict_word = get_dict_word()
           send_telegram_message(dict_word)
           print(f"a word {dict_word} has been sent")
@@ -90,3 +90,8 @@ while True:
     
     schedule.run_pending()
     time.sleep(30)
+    
+    
+    
+    
+    
