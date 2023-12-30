@@ -66,10 +66,7 @@ def get_dict_word():
 
 
 
-
-
 schedule.every().day.at("07:00").do(theory)
-
 
     
 while True:
@@ -85,7 +82,7 @@ while True:
         if minutes == 15 or minutes == 45: 
           dict_word = get_dict_word()
           send_telegram_message(dict_word)
-          print(f"a word {dict_word} has been sent")
+          print(f"{hours}:{minutes} a word {dict_word} has been sent")
           time.sleep(60)
     
     schedule.run_pending()
