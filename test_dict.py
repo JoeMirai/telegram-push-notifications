@@ -25,9 +25,9 @@ def get_dict_word():
         return chosen_word
 
     
-while True:
-    for i in range(1,200):
-      print(get_dict_word())
+
+for i in range(1,200):
+    print(get_dict_word())
 
     
     
