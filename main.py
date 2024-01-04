@@ -67,7 +67,7 @@ def get_dict_word():
 
 
 
-schedule.every().day.at("07:00").do(theory)
+schedule.every().day.at("08:00").do(theory)
 
     
 while True:
