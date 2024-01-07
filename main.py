@@ -9,6 +9,8 @@ bot_token = os.getenv("bot_token", "")
 chat_id = os.getenv("chat_id", "")
 theory_bot_token = os.getenv("theory_bot_token", "")
 
+current_index = 0
+
 #### root ####
 def send_telegram_file(file_path):
   url = f"https://api.telegram.org/bot{theory_bot_token}/sendDocument"
@@ -41,27 +43,35 @@ def theory():
   get_next_image()
   get_next_image()
 
+
+
 def get_dict_word():
-    # Open the CSV file
-    with open('dict.csv', 'r') as file:
-        # Create a CSV reader object
-        csv_reader = csv.reader(file)
+    global current_index
+    
+    # Open the text file
+    with open('dict.txt', 'r', encoding='utf-8') as file:
+        # Read the lines from the file
+        lines = file.read().splitlines()
         
-        # Skip the header if it exists
-        next(csv_reader, None)
+        # If the list is empty, return None
+        if not lines:
+            return None
         
-        # Create a list to store words and weights
-        words_and_weights = []
+        # Initialize variables to store the current entry
+        entry = []
         
-        # Read each row and store the word and weight in the list
-        for row in csv_reader:
-            word, weight = row
-            words_and_weights.append((word, int(weight)))
+        # Iterate through lines until a blank line is encountered
+        while current_index < len(lines) and lines[current_index].strip():
+            entry.append(lines[current_index].strip())
+            current_index += 1
         
-        # Choose a random word based on weights
-        chosen_word = random.choices(words_and_weights, weights=[w[1] for w in words_and_weights])[0][0]
+        # Join the lines to form the complete entry
+        chosen_entry = '^$'.join(entry)
         
-        return chosen_word
+        # Skip the blank line for the next function call
+        current_index += 1
+        
+        return chosen_entry
 
 
 

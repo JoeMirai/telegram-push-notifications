@@ -1,6 +1,5 @@
 *.env
 questions_images/
 questions.pdf
-dict.csv
-CIA_WorldFactBook-Political_world.pdf
-maps/
+dict.txt
+
