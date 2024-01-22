@@ -42,6 +42,8 @@ def theory():
   print("its theory practice time.. sending you something fun")
   get_next_image()
   get_next_image()
+  get_next_image()
+  get_next_image()
 
 
 
@@ -65,6 +67,11 @@ def get_dict_word():
             entry.append(lines[current_index].strip())
             current_index += 1
         
+        # Check if we reached the end of the file
+        if current_index == len(lines):
+            # Reset current_index to 0 to iterate over the file again
+            current_index = 0
+        
         # Join the lines to form the complete entry
         chosen_entry = '^$'.join(entry)
         
@@ -77,27 +84,40 @@ def get_dict_word():
 
 
 
+
 schedule.every().day.at("08:00").do(theory)
 
-    
 while True:
+    try:
+        # Get the current time
+        current_time = datetime.now().time()
 
-    # Get the current time
-    current_time = datetime.now().time()
-
-    # Extract hours and minutes
-    hours = current_time.hour
-    minutes = current_time.minute
-    # Check if the current time is between 8 am and 9 pm
-    if 6 <= hours < 19:
-        if minutes == 15 or minutes == 45: 
-          dict_word = get_dict_word()
-          send_telegram_message(dict_word)
-          print(f"{hours}:{minutes} a word {dict_word} has been sent")
-          time.sleep(60)
+        # Extract hours and minutes
+        hours = current_time.hour
+        minutes = current_time.minute
+        # Check if the current time is between 8 am and 9 pm
+        if 6 <= hours < 19:
+            if minutes == 15 or minutes == 45: 
+              dict_word = get_dict_word()
+              send_telegram_message(dict_word)
+              print(f"{hours}:{minutes} a word {dict_word} has been sent")
+              time.sleep(60)
     
-    schedule.run_pending()
-    time.sleep(30)
+        schedule.run_pending()
+        time.sleep(30)
+
+    except Exception as e:
+        # If an exception occurs, send a Telegram message with the exception details
+        error_message = f"An exception occurred: {str(e)}"
+        send_telegram_message(error_message)
+        print(error_message)
+    
+        
+
+    
+
+
+
     
     
     
